@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BackupLens</title>
+    <link rel="stylesheet" href="/css/tokens.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+    <link rel="stylesheet" href="/css/sidebar.css" />
+    <link rel="stylesheet" href="/css/grid.css" />
+    <link rel="stylesheet" href="/css/files.css" />
+    <link rel="stylesheet" href="/css/dialogs.css" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <div class="app">
+      <header id="header" class="app-header"></header>
+      <div class="workspace">
+        <aside id="sidebar" class="sidebar" hidden aria-label="Library navigation"></aside>
+        <main id="main" class="app-main" tabindex="-1"></main>
+      </div>
+      <footer id="statusbar" class="status-bar"></footer>
+    </div>
+    <div id="toasts" class="toast-root" aria-live="polite"></div>
+    <div id="modal-root"></div>
+    <script type="module" src="/js/main.js"></script>
+  </body>
+</html>

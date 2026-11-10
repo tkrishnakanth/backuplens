@@ -1,0 +1,55 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+*.spec
+*.spec.bak
+
+# Secrets and local config
+.env
+.env.*
+config.local.json
+
+# Runtime data - NEVER commit
+logs/
+cache/
+thumbs/
+exports/
+*.log
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+Manifest.db
+Photos.sqlite*
+
+# Personal media and backups
+backup/
+backups/
+*.heic
+*.HEIC
+*.jpg
+*.JPG
+*.jpeg
+*.png
+*.mov
+*.MOV
+*.mp4
+!frontend/**/*.png
+!frontend/**/*.jpg
+!docs/screenshots/*.png
+
+# Reference screenshot with personal data (keep local, or sanitise then move to docs/screenshots/)
+project-docs/local/
+*.bundle
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+node_modules/

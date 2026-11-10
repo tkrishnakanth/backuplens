@@ -1,0 +1,105 @@
+/* Sidebar (project-docs/UI_SPEC.md §4) */
+.sidebar {
+  flex: none;
+  width: var(--sidebar-w);
+  height: 100%;
+  border-right: 1px solid var(--divider);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 0 24px;
+  scrollbar-width: thin;
+  background: var(--bg);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #c3c9d1;
+  border-radius: 4px;
+}
+
+.sidebar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-row {
+  height: 31px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px 0 14px;
+  font-size: 18px;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+.sidebar-row:hover {
+  background: var(--hover);
+}
+
+.sidebar-row .row-icon {
+  width: 18px;
+  height: 18px;
+  color: #4d5763;
+  flex: none;
+}
+
+.sidebar-row .row-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-row .count-pill {
+  flex: none;
+}
+
+.sidebar-row[aria-selected="true"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.sidebar-row[aria-selected="true"] .row-icon {
+  color: var(--accent-text);
+}
+
+.sidebar-row[aria-selected="true"] .count-pill {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #fff;
+}
+
+.sidebar-heading {
+  margin: 8px 0 2px;
+  padding: 6px 14px 2px;
+  font-size: 18px;
+  color: var(--text);
+  font-weight: 400;
+}
+
+.sidebar-row.moment-row {
+  padding-left: 44px;
+  font-size: 17px;
+}
+
+.sidebar-row.moment-row .row-label {
+  color: #303840;
+}
+
+.sidebar-row.moment-row[aria-selected="true"] .row-label {
+  color: #fff;
+}
+
+.sidebar-empty {
+  padding: 6px 14px 6px 44px;
+  color: var(--text-muted);
+  font-size: 14px;
+}

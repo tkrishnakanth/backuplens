@@ -1,0 +1,196 @@
+/* Date-grouped virtualised grid (project-docs/UI_SPEC.md §5) */
+.grid-canvas {
+  position: relative;
+  min-height: 100%;
+}
+
+.grid-status {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 17px;
+  pointer-events: none;
+}
+
+.grid-skeleton {
+  position: absolute;
+  inset: 0;
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-content: flex-start;
+  pointer-events: none;
+}
+
+.skeleton-tile {
+  width: var(--tile);
+  height: var(--tile);
+  background: var(--skeleton);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.date-group {
+  position: absolute;
+}
+
+.date-header {
+  height: 28px;
+  line-height: 22px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-row {
+  position: absolute;
+  display: flex;
+  gap: 5px;
+  left: 0;
+}
+
+.tile {
+  width: var(--tile);
+  height: var(--tile);
+  flex: 0 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--skeleton);
+  cursor: pointer;
+  outline: none;
+}
+
+.tile:focus-visible {
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.tile img.loaded {
+  opacity: 1;
+}
+
+.tile .thumb-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(135deg, #e8ebef, #d7dce2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #98a1ad;
+}
+
+.tile:hover .thumb-placeholder {
+  background: linear-gradient(135deg, #e2e6eb, #cfd5dd);
+}
+
+.selection-circle {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  background: rgba(20, 27, 36, 0.18);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 3;
+  padding: 0;
+}
+
+.tile:hover .selection-circle,
+.selection-mode .selection-circle,
+.tile.selected .selection-circle {
+  display: flex;
+}
+
+.tile.selected .selection-circle {
+  background: var(--accent);
+  border-color: #fff;
+}
+
+.tile.selected::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 3px var(--accent);
+  pointer-events: none;
+}
+
+.badge {
+  position: absolute;
+  z-index: 2;
+  color: #fff;
+  background: rgba(15, 20, 26, 0.62);
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.duration-badge {
+  right: 6px;
+  bottom: 6px;
+}
+
+.play-glyph {
+  left: 7px;
+  bottom: 6px;
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  border-radius: 50%;
+  background: rgba(15, 20, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.live-glyph {
+  left: 7px;
+  bottom: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: #2f3945;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile.video .live-glyph {
+  display: none;
+}

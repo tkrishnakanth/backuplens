@@ -1,0 +1,122 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --text: #1f2328;
+  --text-muted: #5f6b7a;
+  --accent: #17619f;
+  --accent-text: #ffffff;
+  --btn-bg: #eceef1;
+  --btn-bg-hover: #e0e3e8;
+  --pill-bg: #e8eef6;
+  --pill-border: #c9d3e0;
+  --pill-text: #4a5b73;
+  --divider: #d9dde3;
+  --status-bg: #f6f6f6;
+  --hover: #f2f4f7;
+  --skeleton: #eceef1;
+  --danger: #b42318;
+  --font: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --header-h: 118px;
+  --status-h: 40px;
+  --sidebar-w: clamp(260px, 19vw, 365px);
+  --tile: clamp(150px, 15.3vw, 294px);
+  --radius: 4px;
+  --shadow-card: 0 1px 3px rgba(16, 24, 40, 0.16), 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  overflow: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+svg.icon {
+  display: block;
+  flex: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #15181d;
+  --text: #e7eaef;
+  --text-muted: #9aa4b2;
+  --accent: #3b8fd1;
+  --accent-text: #ffffff;
+  --btn-bg: #262c34;
+  --btn-bg-hover: #313842;
+  --pill-bg: #222b36;
+  --pill-border: #3b4756;
+  --pill-text: #c5ceda;
+  --divider: #2c333b;
+  --status-bg: #1b1f25;
+  --hover: #222830;
+  --skeleton: #262c34;
+  --danger: #ff8a80;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .menu-pop,
+[data-theme="dark"] .modal-card,
+[data-theme="dark"] .backup-card,
+[data-theme="dark"] .version-box,
+[data-theme="dark"] .status-text,
+[data-theme="dark"] .backups-btn,
+[data-theme="dark"] .date-popover,
+[data-theme="dark"] .context-menu,
+[data-theme="dark"] .field input,
+[data-theme="dark"] .field select,
+[data-theme="dark"] .field-row input,
+[data-theme="dark"] .tool-btn {
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme="dark"] .device-card {
+  background: #22272f;
+}
+
+[data-theme="dark"] .count-badge {
+  background: #2a3038;
+  color: #c7d0db;
+}
+
+[data-theme="dark"] .backup-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+}
+
+[data-theme="dark"] .toast {
+  background: #2c333c;
+}
+
