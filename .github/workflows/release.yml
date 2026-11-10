@@ -199,6 +199,9 @@ jobs:
       - name: Checksums and notes
         run: |
           VERSION=$(python -c "from backend.version import VERSION; print(VERSION)")
+          # download-artifact keeps each artifact's directory layout; flatten it first.
+          find release-assets -mindepth 2 -type f -exec mv -t release-assets/ {} +
+          find release-assets -mindepth 1 -type d -empty -delete
           cp THIRD_PARTY_NOTICES.txt LICENSE release-assets/
           cd release-assets
           find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum | sed 's#  ./#  #' > ../SHA256SUMS.txt
