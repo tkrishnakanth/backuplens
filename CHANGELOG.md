@@ -32,6 +32,17 @@ First release. Local-only, read-only browser and exporter for photos in encrypte
   data and the media cache are removed on exit unless `CACHE_PERSIST` is enabled.
 - No outbound network calls at runtime; no CDN assets.
 
+### Licence and packaging
+
+- Relicensed from MIT to **GPL-3.0-or-later** (ADR-010) because the official `pillow-heif` wheels
+  bundle x265 (GPL-2.0-or-later). This keeps source and binary distribution consistent.
+- Added reproducible PyInstaller one-folder packaging, Windows Inno Setup installer, macOS DMG/zip and
+  Linux AppImage/.deb/tar.gz build scripts.
+- Added `THIRD_PARTY_NOTICES.txt` with every bundled Python/native component, exact versions, source
+  URLs and full licence texts, plus the source tag URL in installers and release notes.
+- Added per-OS data/cache paths, single-instance launch, `--version`, `--data-dir`, `--smoke-test`,
+  `--quit-after-idle`, `/api/health`, `/api/app/quit` and a Quit menu item.
+
 ### Known gaps
 
 - In-app rich preview of arbitrary raw files (F-RAW-05, P2) is not implemented; files can be downloaded.

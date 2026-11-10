@@ -8,7 +8,12 @@ dynamic = ["version"]
 description = "Local-only browser and exporter for photos in encrypted iOS backups"
 requires-python = ">=3.11"
 readme = "README.md"
-license = { file = "LICENSE" }
+license = { text = "GPL-3.0-or-later" }
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Programming Language :: Python :: 3",
+  "Environment :: Web Environment",
+]
 
 [tool.setuptools.dynamic]
 version = { attr = "backend.version.VERSION" }

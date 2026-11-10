@@ -29,6 +29,8 @@ MinVersion=10.0
 OutputDir=..\..\dist\installer
 OutputBaseFilename=BackupLens-{#MyAppVersion}-windows-x64-setup
 SetupIconFile=..\icon\icon.ico
+LicenseFile=..\..\LICENSE
+InfoBeforeFile=..\..\THIRD_PARTY_NOTICES.txt
 UninstallDisplayIcon={app}\{#MyAppExeName}
 Compression=lzma2
 SolidCompression=yes
@@ -63,9 +65,9 @@ var
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    DataDir := ExpandConstant('{localappdata}\BackupLens');
-    if DirExists(DataDir) then
+    if not UninstallSilent then
     begin
+      DataDir := ExpandConstant('{localappdata}\BackupLens');
       if MsgBox('Delete BackupLens settings and cache from ' + DataDir + '?', mbConfirmation, MB_YESNO) = IDYES then
         DelTree(DataDir, True, True, True);
     end;

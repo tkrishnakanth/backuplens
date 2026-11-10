@@ -20,8 +20,8 @@ owner's library are reproduced below.
 | Python | 3.13.1 (app requires 3.11+) |
 
 **Licence check:** `iphone_backup_decrypt` 0.11.2 is **MIT** (Copyright 2019–2026 James Sharkey);
-its dependency `pycryptodome` is BSD-2-Clause. Both are compatible with the MIT licence chosen for
-BackupLens.
+its dependency `pycryptodome` is BSD-2-Clause. Both are compatible with BackupLens'
+GPL-3.0-or-later licence (ADR-010).
 
 `Manifest.db` was decrypted to a temporary folder, integrity was checked, and the temp artefacts were
 deleted after the spike.

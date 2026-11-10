@@ -11,6 +11,7 @@ if [ ! -x "$BIN" ]; then
   echo "Linux executable not produced" >&2
   exit 1
 fi
+cp THIRD_PARTY_NOTICES.txt LICENSE "$APP/"
 mkdir -p dist/linux
 tar -C "$APP" -czf "dist/linux/BackupLens-${VERSION}-linux-x86_64.tar.gz" .
 
@@ -56,8 +57,8 @@ dpkg-deb --build "$DEB" "dist/BackupLens-${VERSION}-linux-amd64.deb"
 
 # AppImage (pinned appimagetool and checksum verification)
 TOOL="appimagetool-x86_64.AppImage"
-URL="https://github.com/AppImage/AppImageKit/releases/download/continuous/${TOOL}"
-EXPECTED="${APPIMAGETOOL_SHA256:?Set APPIMAGETOOL_SHA256 to the pinned checksum}"
+URL="https://github.com/AppImage/appimagetool/releases/download/1.9.1/${TOOL}"
+EXPECTED="${APPIMAGETOOL_SHA256:-ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0}"
 curl -fsSL "$URL" -o "/tmp/${TOOL}"
 echo "${EXPECTED}  /tmp/${TOOL}" | sha256sum -c -
 chmod +x "/tmp/${TOOL}"
@@ -70,6 +71,5 @@ cp "$DEB/usr/share/applications/backuplens.desktop" "$APPDIR/usr/share/applicati
 cp "$APPDIR/usr/share/applications/backuplens.desktop" "$APPDIR/backuplens.desktop"
 ln -sfn usr/lib/backuplens/BackupLens "$APPDIR/AppRun"
 chmod +x "$APPDIR/AppRun"
-ARCH=x86_64 "/tmp/${TOOL}" --appimage-extract-and-run "$APPDIR" "dist/BackupLens-${VERSION}-linux-x86_64.AppImage" || \
-  ARCH=x86_64 "/tmp/${TOOL}" "$APPDIR" "dist/BackupLens-${VERSION}-linux-x86_64.AppImage"
+ARCH=x86_64 "/tmp/${TOOL}" --appimage-extract-and-run "$APPDIR" "dist/BackupLens-${VERSION}-linux-x86_64.AppImage"
 "dist/BackupLens-${VERSION}-linux-x86_64.AppImage" --appimage-extract-and-run --smoke-test

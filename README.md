@@ -3,7 +3,7 @@
 > A lightweight, **local-only** web app to browse, preview and export photos and videos from
 > **encrypted iPhone/iPad backups** made by iTunes, Finder or the Apple Devices app on Windows.
 
-Version **0.1.0** · MIT licence · Python 3.11+ · no build step, no cloud, no telemetry.
+Version **0.1.0** · GPL-3.0-or-later · Python 3.11+ · no build step, no cloud, no telemetry.
 
 ![BackupLens browser](docs/screenshots/mock-browser.png)
 
@@ -53,7 +53,24 @@ without a token). It uses several thousand synthetic assets and self-contained S
 
 Full setup, testing, privacy and packaging: **[project-docs/SETUP.md](project-docs/SETUP.md)**.
 
-## 3. Configuration
+## 3. Download
+
+Installables are published on the [latest release](https://github.com/tkrishnakanth/backuplens/releases/latest)
+(draft releases are not public until the maintainer publishes them):
+
+| OS | File | Notes |
+|---|---|---|
+| Windows 10/11 x64 | `BackupLens-<version>-windows-x64-setup.exe` | per-user install, no admin; portable ZIP also published |
+| macOS Apple Silicon | `BackupLens-<version>-macos-arm64.dmg` | unsigned; Open Anyway required until notarized |
+| macOS Intel | `BackupLens-<version>-macos-x86_64.dmg` | unsigned |
+| Linux x86_64 | `BackupLens-<version>-linux-x86_64.AppImage` (also `.deb`, `.tar.gz`) | `chmod +x`; `libfuse2` may be needed |
+
+Always verify `SHA256SUMS.txt` from the same release. Windows:
+`Get-FileHash .\file.exe -Algorithm SHA256`; macOS: `shasum -a 256 file`; Linux: `sha256sum file`.
+Unsigned builds trigger SmartScreen/Gatekeeper warnings; see [docs/INSTALL.md](docs/INSTALL.md) for the
+exact flow. The app only listens on `127.0.0.1` and never needs an account.
+
+## 4. Configuration
 
 - `.env` (git-ignored) is used by the Phase 0 spike and integration tests only:
   ```
@@ -65,7 +82,7 @@ Full setup, testing, privacy and packaging: **[project-docs/SETUP.md](project-do
 - The media cache lives in `%LOCALAPPDATA%\BackupLens\cache` by default (2 GB LRU, configurable).
   It is cleared on exit unless `CACHE_PERSIST` is enabled; **Settings → Clear cache** is always available.
 
-## 4. Feature status (v0.1.0)
+## 5. Feature status (v0.1.0)
 
 | Area | Status |
 |---|---|
@@ -83,7 +100,7 @@ Full setup, testing, privacy and packaging: **[project-docs/SETUP.md](project-do
 
 The complete matrix and acceptance evidence: `project-docs/FEATURES.md` · `project-docs/QA_REPORT.md`.
 
-## 5. How it works
+## 6. How it works
 
 ```
 Browser (vanilla JS)  ⇄  Flask on 127.0.0.1  ⇄  single decrypt worker thread  ⇄  backup folder (read-only)
@@ -103,7 +120,7 @@ Browser (vanilla JS)  ⇄  Flask on 127.0.0.1  ⇄  single decrypt worker thread
 Design details, API and ADRs: [project-docs/ARCHITECTURE.md](project-docs/ARCHITECTURE.md).
 Real database evidence: [project-docs/schema-notes.md](project-docs/schema-notes.md).
 
-## 6. Tests
+## 7. Tests
 
 ```powershell
 pytest -q                       # unit + contract
@@ -115,7 +132,7 @@ Current result: **106 unit/contract + 15 integration tests pass**; 20 exported f
 to the decrypted originals; the real sidebar counts match the reference exactly. `pip-audit` reports no
 known vulnerabilities. Full report: `project-docs/QA_REPORT.md`.
 
-## 7. Privacy and safety
+## 8. Privacy and safety
 
 - Password: memory only, never logged, written or included in errors.
 - Backup folder: read-only; every export destination is checked to be outside it.
@@ -123,7 +140,7 @@ known vulnerabilities. Full report: `project-docs/QA_REPORT.md`.
 - No CDN fonts/scripts, analytics, accounts or outbound requests.
 - Use only on devices you own or are authorised to access.
 
-## 8. Known limitations
+## 9. Known limitations
 
 - Photos stored only in iCloud (Optimize Storage) are not in a local backup.
 - This backup format stores edited photos as `.AAE` adjustment sidecars; no rendered full-size edit exists.
@@ -134,7 +151,7 @@ known vulnerabilities. Full report: `project-docs/QA_REPORT.md`.
 - iOS releases can change `Photos.sqlite`; the code introspects the schema and fails soft, but brand-new
   variants may need a mapping update. Please open an issue with `project-docs/schema-notes.md` evidence.
 
-## 9. Layout
+## 10. Layout
 
 ```
 backend/   app.py, backup/, photos/, media/, export/, files/, api/
@@ -146,7 +163,7 @@ project-docs/   build process, architecture, features, UI spec, setup, prompt lo
                 and local-only raw data under project-docs/local/ (git-ignored)
 ```
 
-## 10. Project documentation
+## 11. Project documentation
 
 The AI-assisted build process and the full design record live in **[project-docs/](project-docs/)**:
 
@@ -160,13 +177,16 @@ The AI-assisted build process and the full design record live in **[project-docs
 Raw schema samples, the owner's reference counts and the reference screenshot stay only in the
 git-ignored `project-docs/local/` folder and are never published.
 
-## 11. Credits and prior art
+## 12. Credits and prior art
 
 - `iphone_backup_decrypt` and the iOS backup reverse-engineering work it builds on.
 - MaxiHuHe04/iTunes-Backup-Explorer (MIT) as a functional reference for the raw file explorer.
 - iBackup Viewer as a **UI/feature reference only**; no assets, code or branding are reused.
 - Licence texts and dependency compatibility: [project-docs/THIRD_PARTY.md](project-docs/THIRD_PARTY.md).
 
-## 12. Licence
+## 13. Licence
 
-MIT — see [LICENSE](LICENSE).
+GPL-3.0-or-later — see [LICENSE](LICENSE). The project was relicensed from MIT in Phase 10 because the
+official `pillow-heif` binary wheels bundle x265 (GPL-2.0-or-later); the source and binaries are now
+distributed consistently under GPL-3.0-or-later. Third-party notices and source links are in
+[THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt).

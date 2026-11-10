@@ -1,6 +1,7 @@
-# Release blocker — GPLv2 component in the binary wheels
+# Release blocker — GPLv2 component in the binary wheels (RESOLVED)
 
-Date: 2026-11-10. Status: **STOPPED before CI/release** (Stage B §7.3).
+Date: 2026-11-10. Status: **RESOLVED — relicensed to GPL-3.0-or-later (Option C).**
+Historical note: this file records the blocker that interrupted Stage B before CI/release.
 
 ## Finding
 
@@ -52,8 +53,16 @@ distribution is clearly separated and compliant.
 Use a different HEIC decoder without x265 (e.g. a system libheif binding), or drop HEIC preview
 support and export originals only. This is a product-scope change and needs an ADR.
 
-## Next action
+## Resolution — 2026-11-10 (Option C)
 
-The human must choose A, B, C or D. No CI/release work should continue until then. The locally
-modified Stage B application/packaging work is preserved on the local branch
-`phase-10b-release`; it has not been pushed.
+- Verified x265 4.3's source headers grant “GNU General Public License … either version 2 of the License,
+  or (at your option) any later version”; its `COPYING` is GPLv2. libheif 1.23.6 and libde265 1.1.3 are
+  LGPLv3; MinGW runtime components are GPLv3-with-GCC-exception/MIT/BSD. All are GPL-3.0-compatible.
+- BackupLens is now **GPL-3.0-or-later** in `LICENSE`, `README.md`, `pyproject.toml`, `CONTRIBUTING.md`,
+  the Inno Setup license page and the generated `THIRD_PARTY_NOTICES.txt`.
+- The one-folder build remains, so LGPL libheif/libde265 are separate replaceable DLLs/shared libraries.
+- `THIRD_PARTY_NOTICES.txt` contains the component/version/licence table, exact source-tag URL
+  (`https://github.com/tkrishnakanth/backuplens/tree/v0.1.0-rc1`) and links for libheif 1.23.6,
+  libde265 1.1.3 and x265 4.3, with full licence texts.
+- The Windows installer and smoke test were rebuilt with these files. Continue at Stage B step 10.
+

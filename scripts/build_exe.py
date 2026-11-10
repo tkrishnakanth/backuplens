@@ -40,7 +40,7 @@ def main() -> int:
     subprocess.run(command, check=True, cwd=ROOT)
     target = ROOT / "dist" / ("BackupLens.app" if sys.platform == "darwin" else "BackupLens")
     if target.exists() and target.is_dir():
-        for extra in ("README.md", "LICENSE", "CHANGELOG.md"):
+        for extra in ("README.md", "LICENSE", "CHANGELOG.md", "THIRD_PARTY_NOTICES.txt"):
             source = ROOT / extra
             if source.is_file():
                 shutil.copy2(source, target / extra)

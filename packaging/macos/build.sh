@@ -13,6 +13,7 @@ fi
 # Ad-hoc signing is the minimum on Apple Silicon; real signing is optional and gated by secrets.
 codesign --force --deep --sign - "$APP"
 codesign --verify --deep --strict "$APP"
+cp THIRD_PARTY_NOTICES.txt LICENSE "$APP/Contents/Resources/" 2>/dev/null || true
 mkdir -p dist/macos
 ditto -c -k --keepParent "$APP" "dist/macos/BackupLens-${VERSION}-macos-$(uname -m).zip"
 mkdir -p dist/dmg
