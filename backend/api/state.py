@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import threading
+import time
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from backend.backup import BackupInfo
@@ -26,4 +28,8 @@ class AppState:
     discovery: Discovery
     frontend_dir: Path
     media_cache: MediaCache
+    data_dir: Path
     persist_cache: bool = False
+    shutdown_event: threading.Event = field(default_factory=threading.Event)
+    started_at: float = field(default_factory=time.time)
+    last_request: float = field(default_factory=time.time)

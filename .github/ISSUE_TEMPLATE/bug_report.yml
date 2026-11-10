@@ -1,0 +1,75 @@
+name: Bug report
+description: Something does not work as documented
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Privacy warning:** do not attach backups, photos, thumbnails, `.env` files, passwords, SQLite
+        files, logs containing personal paths, or screenshots containing personal data. Report the category
+        and path only if privacy is involved (use private vulnerability reporting instead).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description, with paths redacted.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: BackupLens version
+      description: From the status bar or `BackupLens --version`.
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows 10
+        - Windows 11
+        - macOS (Apple Silicon)
+        - macOS (Intel)
+        - Linux x86_64
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+  - type: input
+    id: ios
+    attributes:
+      label: Backup device iOS version
+  - type: dropdown
+    id: encrypted
+    attributes:
+      label: Is the backup encrypted?
+      options: ["Yes", "No", "Not sure"]
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: App version, OS, browser, error text. Redact paths, UDIDs, passwords and file names.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy checklist
+      options:
+        - label: I have not included a password, `.env`, personal photos, backups, SQLite files or unredacted logs.
+          required: true
+        - label: I am using a backup of a device I own or am authorised to access.
+          required: true

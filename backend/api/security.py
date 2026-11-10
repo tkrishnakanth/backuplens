@@ -86,6 +86,12 @@ def install_security(app: Flask, *, token: str, port: int | None = None, secure_
         if not _allowed_host(request.host, port):
             return error_response("bad_host", "Requests must target 127.0.0.1 or localhost", 403)
 
+        state = current_app.extensions.get("backuplens")
+        if state is not None:
+            state.last_request = time.time()
+        if request.path == "/api/health":
+            return None
+
         supplied = _token_from_request(token)
         if supplied is not None and request.args.get("t"):
             g.issue_token_cookie = True

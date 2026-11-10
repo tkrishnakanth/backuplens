@@ -373,6 +373,36 @@ only the new repository. Issues, Discussions, vulnerability reporting, secret sc
 protection and Dependabot were enabled on this repository only. Full evidence:
 `project-docs/PUBLISH_AUDIT.md`.
 
+### P-015 — Phase 10B: release engineering (BLOCKED before CI/release)  🟨
+**Agent:** qa / api
+**Outcome (2026-11-10):** Implemented the Stage B application groundwork and local Windows packaging:
+single version source (`backend/version.py` read by `pyproject.toml`), `--version`, `--port`,
+`--no-browser`, `--data-dir`, `--smoke-test`, `--quit-after-idle`, per-OS data/cache paths,
+single-instance state file, unauthenticated `/api/health`, protected `POST /api/app/quit`, and a
+menu item. Added original icon artwork/generator, PyInstaller spec, Inno Setup per-user installer,
+macOS/Linux packaging scripts, and tests. Locally the Windows PyInstaller build passed `--smoke-test`;
+the Inno installer silently installed, the installed app passed `--smoke-test`, and silent uninstall
+removed the program directory.
+
+**STOP CONDITION HIT (GPLv2), before CI/release:** `pillow-heif` 1.8.1 binary wheels bundle
+`x265` under GPLv2 (plus LGPLv3 libheif/libde265). The frozen app therefore contains a GPLv2
+component and cannot be published as MIT-only binaries. All local `build/` and `dist/` output was
+deleted; no CI run, release, rc tag or binary was uploaded. See `project-docs/RELEASE_BLOCKER.md` for
+the evidence and options A–D. Stage B remains 🟨 pending the owner's licensing decision.
+
+### P-016 — Phase 10B: GPL relicensing and release preparation  🟨
+**Agent:** qa / api / architect
+**Outcome (2026-11-10):** Verified from the bundled notices and the x265 4.3 source headers that x265 is
+GPL-2.0-or-later (not GPL-2.0-only); libheif 1.23.6 and libde265 1.1.3 are LGPL-3.0 and the MinGW runtime
+components are GPLv3-with-GCC-exception/MIT/BSD. All are GPL-3.0-compatible. Relicensed the project to
+GPL-3.0-or-later in LICENSE, README, pyproject metadata, CONTRIBUTING and the installer licence page;
+added ADR-010. Generated a full `THIRD_PARTY_NOTICES.txt` with component/version/licence/source tables,
+the exact source tag URL and full licence texts. Kept one-folder packaging so LGPL libraries remain
+separate replaceable DLLs/shared libraries. Added app packaging/launcher groundwork, icon assets,
+PyInstaller spec, Windows installer, macOS/Linux scripts, release/CI workflows, community files and
+INSTALL/SIGNING/RELEASING docs. Windows build/installer/smoke tests pass locally. Continuing with the
+CI repair loop and a draft rc1 release; the release is not published.
+
 ### P-013+ — Optional modules (P2/P3)  ⬜
 Run one prompt per module after v0.1.0: Messages (F-MSG-01/02), WhatsApp (F-WAP-01), Contacts
 (F-CON-01), Call history (F-CAL-01), Notes (F-NOT-01), Calendar, Safari, Voice memos, Apps.

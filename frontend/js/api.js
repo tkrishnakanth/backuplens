@@ -81,6 +81,7 @@ const real = {
   },
   clearCache: () => request("/api/cache/clear", { method: "POST", body: {} }),
   getSettings: () => request("/api/settings"),
+  quitApp: () => request("/api/app/quit", { method: "POST", body: {} }),
   updateSettings: (patch) => request("/api/settings", { method: "POST", body: patch }),
   fileDomains: () => request("/api/files/domains"),
   fileTree: (domain, path = "") =>

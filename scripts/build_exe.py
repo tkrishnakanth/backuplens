@@ -1,17 +1,15 @@
-"""Build an optional PyInstaller one-folder distribution.
+"""Build the optional PyInstaller one-folder distribution.
 
 Usage (from the repo root, venv active):
 
     pip install pyinstaller
     python scripts/build_exe.py
 
-Result: ``dist/BackupLens/BackupLens.exe`` with the frontend bundled. The app still
-stores configuration/cache under ``%LOCALAPPDATA%\\BackupLens`` and logs next to the exe.
+Result: ``dist/BackupLens/BackupLens.exe`` on Windows (``BackupLens.app`` on macOS).
 """
 
 from __future__ import annotations
 
-import os
 import shutil
 import subprocess
 import sys
@@ -26,46 +24,27 @@ def main() -> int:
     except ImportError:
         print("PyInstaller is not installed. Run: pip install pyinstaller")
         return 2
-
-    frontend = ROOT / "frontend"
-    if not (frontend / "index.html").is_file():
-        print("frontend/index.html is missing")
-        return 2
-
-    dist = ROOT / "dist"
-    build = ROOT / "build"
     command = [
         sys.executable,
         "-m",
         "PyInstaller",
         "--noconfirm",
         "--clean",
-        "--name",
-        "BackupLens",
         "--distpath",
-        str(dist),
+        str(ROOT / "dist"),
         "--workpath",
-        str(build),
-        "--specpath",
-        str(build),
-        "--add-data",
-        f"{frontend}{os.pathsep}frontend",
-        "--collect-all",
-        "pillow_heif",
-        "--hidden-import",
-        "waitress",
-        str(ROOT / "backend" / "app.py"),
+        str(ROOT / "build"),
+        str(ROOT / "packaging" / "backuplens.spec"),
     ]
     print("Running:", " ".join(command))
     subprocess.run(command, check=True, cwd=ROOT)
-
-    target = dist / "BackupLens"
-    for extra in ("README.md", "LICENSE", "CHANGELOG.md"):
-        source = ROOT / extra
-        if source.is_file():
-            shutil.copy2(source, target / extra)
-    print(f"\nBuilt: {target / 'BackupLens.exe'}")
-    print("Run it, then open the token URL printed in the console.")
+    target = ROOT / "dist" / ("BackupLens.app" if sys.platform == "darwin" else "BackupLens")
+    if target.exists() and target.is_dir():
+        for extra in ("README.md", "LICENSE", "CHANGELOG.md", "THIRD_PARTY_NOTICES.txt"):
+            source = ROOT / extra
+            if source.is_file():
+                shutil.copy2(source, target / extra)
+    print(f"\nBuilt: {target}")
     return 0
 
 

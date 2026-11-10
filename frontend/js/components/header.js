@@ -52,6 +52,7 @@ export function createHeader(root, { onMenuAction, onToolbarAction, isMock = fal
     ["clear-cache", "Clear cache"],
     ["about", "About"],
     ["close", "Close backup"],
+    ["quit", "Quit BackupLens"],
   ];
   for (const [action, label] of menuItems) {
     mainMenu.append(

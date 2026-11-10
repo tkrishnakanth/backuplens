@@ -38,6 +38,9 @@ ALLOWED_PREFIXES = (
     "packaging/icon/",
     "tests/assets/",
 )
+# Verbatim upstream licence texts contain their authors' contact addresses; those are
+# not the maintainer's personal data, so only the e-mail/local-path heuristics skip them.
+VERBATIM_LICENSE_FILES = ("THIRD_PARTY_NOTICES.txt", "packaging/licenses/")
 UDID = re.compile(r"\b[0-9A-Fa-f]{8}-[0-9A-Fa-f]{16}\b")
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 LOCAL_PATH = re.compile(r"(?:C:\\Users\\|/Users/|/home/)(?!YOU|You|Public|<|example)[^\\/\s]+")
@@ -76,14 +79,16 @@ def main() -> int:
             continue
         if UDID.search(text):
             problems.append((name, "device-ID-like string"))
-        for match in EMAIL.finditer(text):
-            value = match.group(0).lower()
-            if value.endswith("@users.noreply.github.com") or value.endswith("@example.com"):
-                continue
-            problems.append((name, "personal email"))
-            break
-        if LOCAL_PATH.search(text):
-            problems.append((name, "local user path"))
+        verbatim_license = name == "THIRD_PARTY_NOTICES.txt" or name.startswith("packaging/licenses/")
+        if not verbatim_license:
+            for match in EMAIL.finditer(text):
+                value = match.group(0).lower()
+                if value.endswith("@users.noreply.github.com") or value.endswith("@example.com"):
+                    continue
+                problems.append((name, "personal email"))
+                break
+            if LOCAL_PATH.search(text):
+                problems.append((name, "local user path"))
         if TOKENISH.search(text):
             problems.append((name, "secret/token-like string"))
     if problems:

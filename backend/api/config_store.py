@@ -8,11 +8,11 @@ import threading
 from pathlib import Path
 from typing import Any
 
+from .paths import default_data_dir
+
 
 def default_config_path() -> Path:
-    base = os.environ.get("LOCALAPPDATA")
-    root = Path(base) if base else Path.home() / ".backuplens"
-    return root / "BackupLens" / "config.json"
+    return default_data_dir() / "config.json"
 
 
 class ConfigStore:

@@ -1,8 +1,25 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "backuplens"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Local-only browser and exporter for photos in encrypted iOS backups"
 requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+classifiers = [
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Programming Language :: Python :: 3",
+  "Environment :: Web Environment",
+]
+
+[tool.setuptools.dynamic]
+version = { attr = "backend.version.VERSION" }
+
+[tool.setuptools.packages.find]
+include = ["backend*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

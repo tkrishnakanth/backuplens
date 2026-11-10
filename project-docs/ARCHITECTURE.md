@@ -357,6 +357,7 @@ virtualizes rendering.
 | ADR-007 | 2026-10-28 | Build the photo index in a background thread after unlock; `/api/library/*` returns 409 `index_not_ready` until ready; `/api/session` exposes `indexState` + `progress` | Avoids a blocking HTTP request and satisfies F-BKP-05. Measured under a second for a several-thousand-asset library |
 | ADR-008 | 2026-10-28 | Media cache in `%LOCALAPPDATA%\BackupLens\cache`, per-backup namespace, LRU cap 2 GB, cleared on exit unless `CACHE_PERSIST`; encrypted originals decrypted once to the cache and served with HTTP Range | Avoids buffering large videos in RAM, keeps the backup read-only, and defaults to removing decrypted data on exit |
 | ADR-009 | 2026-10-28 | Raw export preserves `<domain>/<relativePath>`; raw search passes the user's LIKE pattern through with `ESCAPE '\'`; settings are stored under the `settings` key in `config.json` | Matches iTunes-Backup-Explorer behaviour, avoids cross-domain name collisions, and keeps all preferences in the documented config file |
+| ADR-010 | 2026-11-10 | Relicense BackupLens to **GPL-3.0-or-later**; keep the PyInstaller one-folder layout so LGPL libheif/libde265 remain separate replaceable DLLs/shared libraries | `pillow-heif` binary wheels bundle x265, which is GPL-2.0-or-later; GPLv3 is compatible with that and with the LGPLv3 native libraries. Binary and source distribution are now consistent. |
 
 ## 15. Risks and open questions
 

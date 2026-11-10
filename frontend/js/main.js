@@ -160,6 +160,14 @@ async function handleMenu(action) {
     ctx.header.setDevice(null);
     await ctx.showHome();
     showToast("Backup closed. Temporary decrypted data was removed.", "success");
+  } else if (action === "quit") {
+    try {
+      await api.quitApp();
+      showToast("BackupLens is shutting down. You can close this tab.");
+      window.setTimeout(() => window.close(), 600);
+    } catch (error) {
+      showToast(error?.message || "Could not quit BackupLens.", "error");
+    }
   }
 }
 
