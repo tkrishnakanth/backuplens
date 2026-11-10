@@ -9,6 +9,7 @@ from pathlib import Path
 from backend.backup.errors import BadDestination
 
 _INVALID = re.compile(r'[<>:"/\\|?*\x00-\x1f]')
+_WINDOWS_ABSOLUTE = re.compile(r"^(?:[A-Za-z]:[\\/]|\\\\)")
 _RESERVED = {
     "CON",
     "PRN",
@@ -58,7 +59,12 @@ def prepare_destination(destination: Path, backup_dir: Path) -> Path:
 
 def safe_join(base: Path, relative: Path | str) -> Path:
     relative_path = Path(relative)
-    if relative_path.is_absolute() or ".." in relative_path.parts:
+    raw = str(relative)
+    if (
+        relative_path.is_absolute()
+        or ".." in relative_path.parts
+        or _WINDOWS_ABSOLUTE.match(raw)
+    ):
         raise BadDestination("Unsafe export path")
     candidate = base / relative_path
     base_real = os.path.realpath(base)
