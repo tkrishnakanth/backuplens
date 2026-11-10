@@ -357,6 +357,22 @@ the real UDID from tracked docs/tests/mock, regenerated the mock screenshots wit
 `project-docs/local/` is git-ignored and no personal media/SQLite/`.env` is tracked. Proposed tag: `v0.1.0` —
 "BackupLens v0.1.0: local photo browser and unlimited exporter for encrypted iOS backups". Not pushed.
 
+### P-014 — Phase 10A: publish the repository safely  ✅
+**Agent:** qa (release engineer), architect review
+**Outcome (2026-11-10):** Reorganised the public tree into `project-docs/`, `docs/`, code and
+`packaging/`; fixed every link/path (link checker 0 dangling); sanitised schema notes and the mock/test
+data; moved raw notes, reference counts and the reference screenshot into the git-ignored
+`project-docs/local/`. Privacy audit covered every tracked text file with `detect-secrets` 1.5.0 and a
+custom guard. History was rewritten with `git-filter-repo` 2.47.0; a residual device identifier led to a
+fresh single-commit history of the cleaned tree, then reflog expiration/GC. The safety bundle is outside
+the repository. The private repository was created and pushed; a fresh shallow clone matched 136 tracked
+files and passed both scanners. It was then made public (explicitly only
+`tkrishnakanth/backuplens`); `gh repo view` shows PUBLIC/false, unauthenticated GitHub returns HTTP 200,
+the unauthenticated API returns `private=false`, and the before/after repository snapshot diff contains
+only the new repository. Issues, Discussions, vulnerability reporting, secret scanning + push
+protection and Dependabot were enabled on this repository only. Full evidence:
+`project-docs/PUBLISH_AUDIT.md`.
+
 ### P-013+ — Optional modules (P2/P3)  ⬜
 Run one prompt per module after v0.1.0: Messages (F-MSG-01/02), WhatsApp (F-WAP-01), Contacts
 (F-CON-01), Call history (F-CAL-01), Notes (F-NOT-01), Calendar, Safari, Voice memos, Apps.
