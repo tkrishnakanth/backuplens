@@ -8,14 +8,14 @@ import shutil
 import threading
 from pathlib import Path
 
+from backend.api.paths import default_cache_dir
+
 DEFAULT_LIMIT_BYTES = 2 * 1024 * 1024 * 1024
 _SAFE = re.compile(r"[^A-Za-z0-9._-]+")
 
 
 def default_cache_root() -> Path:
-    base = os.environ.get("LOCALAPPDATA")
-    root = Path(base) if base else Path.home() / ".backuplens"
-    return root / "BackupLens" / "cache"
+    return default_cache_dir()
 
 
 def _safe(value: str) -> str:

@@ -444,6 +444,10 @@ export async function clearCache() {
   return { cleared: true };
 }
 
+export async function quitApp() {
+  return { quitting: true };
+}
+
 let mockSettings = {
   cacheLimitBytes: 2 * 1024 * 1024 * 1024,
   cacheLocation: "C:\\Users\\Public\\BackupLens\\cache",

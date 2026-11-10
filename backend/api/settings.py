@@ -5,14 +5,15 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from backend.media.cache import DEFAULT_LIMIT_BYTES, MediaCache, default_cache_root
+from backend.api.paths import default_cache_dir
+from backend.media.cache import DEFAULT_LIMIT_BYTES, MediaCache
 
 from .config_store import ConfigStore
 from .errors import ApiError
 
 DEFAULT_SETTINGS: dict[str, Any] = {
     "cacheLimitBytes": DEFAULT_LIMIT_BYTES,
-    "cacheLocation": str(default_cache_root()),
+    "cacheLocation": str(default_cache_dir()),
     "theme": "system",
     "dateGroupingZone": "capture",
     "thumbnailSize": 320,
