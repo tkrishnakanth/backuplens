@@ -152,7 +152,7 @@ __pycache__/
 .mypy_cache/
 build/
 dist/
-*.spec.bak
+*.spec
 
 # Secrets and local config
 .env
@@ -186,9 +186,12 @@ backups/
 !frontend/**/*.png
 !frontend/**/*.jpg
 !docs/screenshots/*.png
+!tests/assets/*.heic
+!packaging/icon/*.png
 
-# Reference screenshot with personal data (keep local, or sanitise then move to docs/screenshots/)
+# Raw/private build material and the reference screenshot (never public)
 project-docs/local/
+*.bundle
 
 # OS / editor
 .DS_Store
@@ -227,9 +230,10 @@ Before making the repo public, run through this checklist:
 ## 9. Privacy note about the reference screenshot
 
 Your screenshot shows a device **Unique ID**, personal photos, and a photo of a document containing a
-name, phone number and email. Do **not** commit it to a public repository. Either:
-- keep it in `project-docs/local/` (git-ignored by §7) and give the UI agent its path locally, **or**
-- crop to the sidebar/header and blur the photos, save into `docs/screenshots/`, and commit that version.
+name, phone number and email. Do **not** commit it to a public repository and do not commit a cropped or
+blurred derivative either. Keep it only in `project-docs/local/` (git-ignored by §7) and give the UI
+agent its path locally. The public screenshots under `docs/screenshots/` are generated from the synthetic
+mock library and contain no personal data.
 
 Agents running through opencode send file contents to the model provider you configured, so only place
 the image in the project if you are comfortable with that.

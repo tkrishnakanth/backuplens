@@ -9,7 +9,7 @@ and double-check that it really is public while your other repositories stay pri
 **Stage B:** build installable packages for Windows, macOS and Linux, set up GitHub Actions, add the
 open-source community files and produce a draft pre-release.
 
-The specification is `project-docs/RELEASE.md` (Stage A is §0). Put both files in your `docs/` folder first.
+The specification is `project-docs/RELEASE.md` (Stage A is §0). Put both files in `project-docs/` first.
 
 > Reality check: one prompt can write everything, and the agent can fully test the Windows installer on your
 > PC. macOS and Linux installers can only be built and tested on GitHub's machines, so expect 1-3 "fix the CI"
@@ -20,7 +20,7 @@ The specification is `project-docs/RELEASE.md` (Stage A is §0). Put both files 
 ## 1. Before you paste (checklist for you)
 
 1. Phases 0-9 are finished and committed locally; tests pass.
-2. `project-docs/RELEASE.md` and this file are in `docs/`.
+2. `project-docs/RELEASE.md` and this file are in `project-docs/`.
 3. **GitHub CLI installed and logged in:** run `gh auth status`. It must show you are logged in with the
    `repo` scope. If `gh` is missing: `winget install GitHub.cli`, then `gh auth login`. (Your saved git
    credentials alone can push, but they cannot create a repo or change visibility; `gh` can.)
@@ -43,8 +43,8 @@ autonomously. Stop only in the cases listed under "WHEN TO STOP".
 REPO_NAME = backuplens        (owner = the logged-in GitHub user from `gh api user --jq .login`)
 
 STEP 0 - READ
-Read fully: project-docs/RELEASE.md, project-docs/ONE_SHOT_RELEASE_PROMPT.md, README.md, ARCHITECTURE.md, AGENTS.md,
-SETUP.md, project-docs/FEATURES.md and PROMPT_LOG.md, then list the repository (git ls-files and the untracked
+Read fully: project-docs/RELEASE.md, project-docs/ONE_SHOT_RELEASE_PROMPT.md, README.md, project-docs/ARCHITECTURE.md, AGENTS.md,
+project-docs/SETUP.md, project-docs/FEATURES.md and project-docs/PROMPT_LOG.md, then list the repository (git ls-files and the untracked
 files). Follow AGENTS.md section 1 throughout. Never print, store or commit secrets, the backup password,
 device identifiers or any content from my backup. Do not read .env values; only check that the variables exist.
 
@@ -66,14 +66,14 @@ CONTRIBUTING.md, CODE_OF_CONDUCT.md, .gitignore, requirements.txt, .github/, and
 auto-loads it from the root; mention this in your report). Keep docs/ for the public user-facing docs written
 later. Move the reference screenshot and any raw/personal spike output into project-docs/local/ (git-ignored,
 never tracked). Then fix EVERY cross-reference: links and paths in all Markdown files, the reading order in
-AGENTS.md section 1, the prompts in PROMPT_LOG.md, .gitignore entries, and any code/test/script that refers to
+AGENTS.md section 1, the prompts in project-docs/PROMPT_LOG.md, .gitignore entries, and any code/test/script that refers to
 a moved file. Run a link/path check and the full test suite; zero dangling references allowed. Add a short
 "Project documentation" section to README.md.
 
 STEP 3 - PRIVACY AUDIT (working tree AND full git history)
 Follow project-docs/RELEASE.md section 0.2 literally. Scan EVERY tracked text file, not a sample, plus the list of all
 files ever added in history. Use gitleaks or detect-secrets if you can install a pinned version, AND the custom
-patterns in section 0.2, AND read the files most likely to contain personal data (PROMPT_LOG.md, SETUP.md,
+patterns in section 0.2, AND read the files most likely to contain personal data (project-docs/PROMPT_LOG.md, project-docs/SETUP.md,
 schema notes, tests, fixtures, scripts, mock data, any json/yml/opencode config). I know at least that SETUP.md
 contains my real device ID as an example (copied from my screenshot), that spike/schema notes may contain real
 sample rows, file names, dates and place names from my library, and that the reference screenshot contains

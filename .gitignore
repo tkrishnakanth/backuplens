@@ -42,6 +42,8 @@ backups/
 !frontend/**/*.png
 !frontend/**/*.jpg
 !docs/screenshots/*.png
+!tests/assets/*.heic
+!packaging/icon/*.png
 
 # Reference screenshot with personal data (keep local, or sanitise then move to docs/screenshots/)
 project-docs/local/

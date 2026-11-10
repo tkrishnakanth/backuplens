@@ -57,7 +57,7 @@ Every row below was executed; details and exact test names live in `project-docs
 | Area | IDs | Status | Notes |
 |---|---|---|---|
 | Backup discovery/session | F-BKP-01, 02, 03, 04, 05, 07 | **Pass** | Wrong password retry is stateless; temp manifest removed on close |
-| Library categories | F-PHO-01, 02, 03 | **Pass** | All 13 counts and both albums match the reference exactly |
+| Library categories | F-PHO-01, 02, 03 | **Pass** | 13 categories and user albums are derived; exact reference values live in the ignored local file and are checked only when supplied. The current backup changed after Phase 0, so public tests assert internal consistency. |
 | Grid/selection/browser | F-PHO-04, 05, 10, 11, 12 | **Pass** | several thousand assets, ≤300 DOM tiles, instant type filter, calendar jump |
 | Preview/media | F-PHO-06, 07, 08, 09 | **Pass** | Thumbs, previews, Range originals, Live MOV; HEVC codec hint |
 | Original/edited metadata | F-PHO-13 | **Pass** | `.AAE` sidecar exposed (CR-001); no rendered edit exists |
