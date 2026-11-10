@@ -92,7 +92,7 @@ jobs:
           if ($smoke.ExitCode -ne 0) { exit $smoke.ExitCode }
           $uninstall = Start-Process -FilePath "$target\unins000.exe" -ArgumentList "/VERYSILENT","/SUPPRESSMSGBOXES","/NORESTART" -Wait -PassThru
           if ($uninstall.ExitCode -ne 0) { exit $uninstall.ExitCode }
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: windows
           path: |
@@ -118,7 +118,7 @@ jobs:
         run: |
           python scripts/generate_notices.py
           bash packaging/macos/build.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: macos-arm64
           path: |
@@ -144,7 +144,7 @@ jobs:
         run: |
           python scripts/generate_notices.py
           bash packaging/macos/build.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: macos-x86_64
           path: |
@@ -174,7 +174,7 @@ jobs:
         run: |
           python scripts/generate_notices.py
           bash packaging/linux/build.sh
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: linux
           path: |
