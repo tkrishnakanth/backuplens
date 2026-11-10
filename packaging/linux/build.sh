@@ -30,7 +30,7 @@ Exec=/opt/backuplens/BackupLens
 Icon=backuplens
 Terminal=false
 Type=Application
-Categories=Utility;Graphics;
+Categories=Graphics;
 DESKTOP
 cat > "$DEB/DEBIAN/control" <<CONTROL
 Package: backuplens
@@ -69,6 +69,8 @@ rm -rf "$APPDIR"
 mkdir -p "$APPDIR/usr/lib/backuplens" "$APPDIR/usr/share/icons/hicolor/256x256/apps" "$APPDIR/usr/share/applications"
 cp -R "$APP/." "$APPDIR/usr/lib/backuplens/"
 cp packaging/icon/icon-256.png "$APPDIR/usr/share/icons/hicolor/256x256/apps/backuplens.png"
+# appimagetool also expects the icon at the AppDir root.
+cp packaging/icon/icon-256.png "$APPDIR/backuplens.png"
 cp "$DEB/usr/share/applications/backuplens.desktop" "$APPDIR/usr/share/applications/backuplens.desktop"
 cp "$APPDIR/usr/share/applications/backuplens.desktop" "$APPDIR/backuplens.desktop"
 # Inside the AppImage the launcher is on PATH via AppRun, not /opt/backuplens.
