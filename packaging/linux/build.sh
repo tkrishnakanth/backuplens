@@ -53,6 +53,8 @@ command -v gtk-update-icon-cache >/dev/null 2>&1 && gtk-update-icon-cache -f /us
 exit 0
 POSTINST
 chmod 755 "$DEB/DEBIAN/postinst"
+mkdir -p "$DEB/usr/share/doc/backuplens"
+cp THIRD_PARTY_NOTICES.txt LICENSE "$DEB/usr/share/doc/backuplens/"
 dpkg-deb --build "$DEB" "dist/BackupLens-${VERSION}-linux-amd64.deb"
 
 # AppImage (pinned appimagetool and checksum verification)
@@ -69,6 +71,8 @@ cp -R "$APP/." "$APPDIR/usr/lib/backuplens/"
 cp packaging/icon/icon-256.png "$APPDIR/usr/share/icons/hicolor/256x256/apps/backuplens.png"
 cp "$DEB/usr/share/applications/backuplens.desktop" "$APPDIR/usr/share/applications/backuplens.desktop"
 cp "$APPDIR/usr/share/applications/backuplens.desktop" "$APPDIR/backuplens.desktop"
+# Inside the AppImage the launcher is on PATH via AppRun, not /opt/backuplens.
+sed -i 's|^Exec=.*|Exec=BackupLens|' "$APPDIR/usr/share/applications/backuplens.desktop" "$APPDIR/backuplens.desktop"
 ln -sfn usr/lib/backuplens/BackupLens "$APPDIR/AppRun"
 chmod +x "$APPDIR/AppRun"
 ARCH=x86_64 "/tmp/${TOOL}" --appimage-extract-and-run "$APPDIR" "dist/BackupLens-${VERSION}-linux-x86_64.AppImage"
