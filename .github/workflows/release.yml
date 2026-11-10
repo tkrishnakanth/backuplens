@@ -199,15 +199,38 @@ jobs:
       - name: Checksums and notes
         run: |
           VERSION=$(python -c "from backend.version import VERSION; print(VERSION)")
+          cp THIRD_PARTY_NOTICES.txt LICENSE release-assets/
           cd release-assets
-          find . -type f ! -name SHA256SUMS.txt -print0 | xargs -0 sha256sum | sed 's#  ./#  #' > ../SHA256SUMS.txt
+          find . -maxdepth 1 -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum | sed 's#  ./#  #' > ../SHA256SUMS.txt
           cd ..
+          python - "$VERSION" <<'PY'
+          import sys
+          from pathlib import Path
+
+          version = sys.argv[1]
+          lines = Path("CHANGELOG.md").read_text(encoding="utf-8").splitlines()
+          section: list[str] = []
+          active = False
+          for line in lines:
+              if line.startswith(f"## [{version}]"):
+                  active = True
+              elif active and line.startswith("## ["):
+                  break
+              if active:
+                  section.append(line)
+          Path("release-section.md").write_text("\n".join(section).strip() + "\n", encoding="utf-8")
+          PY
           {
-            awk -v v="$VERSION" '$0 ~ "^## \\[" v "\\]" {on=1} on && /^## \\[/ && $0 !~ v {exit} on {print}' CHANGELOG.md
+            cat release-section.md
             echo
             echo "Corresponding source: https://github.com/${GITHUB_REPOSITORY}/tree/${GITHUB_REF_NAME}"
             echo
-            echo "Third-party notices and source links are included in THIRD_PARTY_NOTICES.txt in every artifact."
+            echo "Bundled native libraries (exact source):"
+            echo "- libheif 1.23.6: https://github.com/strukturag/libheif/tree/v1.23.6 (LGPL-3.0-or-later)"
+            echo "- libde265 1.1.3: https://github.com/strukturag/libde265/tree/v1.1.3 (LGPL-3.0-or-later)"
+            echo "- x265 4.3: https://github.com/Multicorewareinc/x265/tree/4.3 (GPL-2.0-or-later)"
+            echo
+            echo "BackupLens is GPL-3.0-or-later. Full licence texts and source links are in THIRD_PARTY_NOTICES.txt, attached and inside every artifact."
           } > release-notes.md
           cat SHA256SUMS.txt >> release-notes.md
       - name: Create draft pre-release
@@ -218,5 +241,5 @@ jobs:
           name: BackupLens ${{ github.ref_name }}
           body_path: release-notes.md
           files: |
-            release-assets/**
+            release-assets/*
             SHA256SUMS.txt
