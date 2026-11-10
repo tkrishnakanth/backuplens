@@ -8,6 +8,7 @@ __pycache__/
 build/
 dist/
 *.spec
+!packaging/backuplens.spec
 *.spec.bak
 
 # Secrets and local config
@@ -28,8 +29,8 @@ Manifest.db
 Photos.sqlite*
 
 # Personal media and backups
-backup/
-backups/
+/backup/
+/backups/
 *.heic
 *.HEIC
 *.jpg
