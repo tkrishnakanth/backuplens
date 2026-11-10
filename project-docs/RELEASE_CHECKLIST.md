@@ -56,20 +56,25 @@ dist\BackupLens\BackupLens.exe
 - [ ] `project-docs/QA_REPORT.md` lists known gaps.
 - [ ] `PROMPT_LOG.md` has this phase's outcome.
 
-## 6. Tag and publish (human)
+## 6. Tag and draft release (automated)
+
+`.github/workflows/release.yml` builds Windows, macOS arm64/Intel and Linux artifacts and creates a
+**draft pre-release**. It never publishes automatically.
 
 ```powershell
-git tag -a v0.1.0 -m "BackupLens v0.1.0: local photo browser and unlimited exporter for encrypted iOS backups"
-git push origin main
-git push origin v0.1.0
+git tag -a v0.1.0-rc1 -m "BackupLens v0.1.0-rc1"
+git push origin v0.1.0-rc1
 ```
 
-Suggested tag message:
+- [ ] Wait for the Release workflow on the tag; all four build jobs and the draft job must be green.
+- [ ] `gh release download v0.1.0-rc1`, verify every hash in `SHA256SUMS.txt`, and smoke-test the Windows
+      installer (silent install → `--smoke-test` → silent uninstall).
+- [ ] Confirm Windows setup/portable, both macOS DMG/ZIP pairs and all three Linux artifacts are attached,
+      and that `LICENSE` + `THIRD_PARTY_NOTICES.txt` are included.
+- [ ] A human reviews the draft and clicks **Publish release**. Only then create the final `v0.1.0` tag.
+- [ ] Never attach a backup, photo, `.env`, SQLite file or log; never replace published assets silently.
 
-> **v0.1.0 — first release.** Browse and export photos/videos from encrypted iOS backups on Windows,
-> entirely locally. Sidebar parity with the local reference library, virtualised several-thousand-photo grid,
-> Range-streamed videos/Live Photos, unlimited folder export and a raw Manifest explorer. 106 unit +
-> 15 integration tests against a real iPhone backup. Read-only by design; no telemetry, no cloud.
-
-- [ ] Create the GitHub release from the tag, attach the optional `dist\BackupLens` ZIP (no personal data).
-- [ ] Keep the repository private until the history/privacy sweep is confirmed.
+> Suggested draft message: **v0.1.0-rc1 — first release.** Browse and export photos/videos from encrypted
+> iOS backups entirely locally: virtualised grid, Range-streamed originals, unlimited folder export, raw
+> Manifest explorer. Read-only by design; no telemetry, no cloud. 110 unit/contract +
+> 15 integration tests. GPL-3.0-or-later with full third-party notices and source links.

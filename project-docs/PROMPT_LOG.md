@@ -390,18 +390,30 @@ component and cannot be published as MIT-only binaries. All local `build/` and `
 deleted; no CI run, release, rc tag or binary was uploaded. See `project-docs/RELEASE_BLOCKER.md` for
 the evidence and options A–D. Stage B remains 🟨 pending the owner's licensing decision.
 
-### P-016 — Phase 10B: GPL relicensing and release preparation  🟨
+### P-016 — Phase 10B: GPL relicensing and release preparation  ✅
 **Agent:** qa / api / architect
 **Outcome (2026-11-10):** Verified from the bundled notices and the x265 4.3 source headers that x265 is
-GPL-2.0-or-later (not GPL-2.0-only); libheif 1.23.6 and libde265 1.1.3 are LGPL-3.0 and the MinGW runtime
-components are GPLv3-with-GCC-exception/MIT/BSD. All are GPL-3.0-compatible. Relicensed the project to
-GPL-3.0-or-later in LICENSE, README, pyproject metadata, CONTRIBUTING and the installer licence page;
-added ADR-010. Generated a full `THIRD_PARTY_NOTICES.txt` with component/version/licence/source tables,
-the exact source tag URL and full licence texts. Kept one-folder packaging so LGPL libraries remain
+GPL-2.0-or-later (not GPL-2.0-only); libheif 1.23.6 and libde265 1.1.3 are LGPL-3.0-or-later and the
+MinGW runtime components are GPLv3-with-GCC-exception/MIT/BSD. All are GPL-3.0-compatible. Relicensed the
+project to GPL-3.0-or-later in LICENSE, README, pyproject metadata, CONTRIBUTING and the installer licence
+page; added ADR-010. Generated a full `THIRD_PARTY_NOTICES.txt` with component/version/licence/source
+tables, the exact source tag URL and full licence texts. Kept one-folder packaging so LGPL libraries remain
 separate replaceable DLLs/shared libraries. Added app packaging/launcher groundwork, icon assets,
 PyInstaller spec, Windows installer, macOS/Linux scripts, release/CI workflows, community files and
-INSTALL/SIGNING/RELEASING docs. Windows build/installer/smoke tests pass locally. Continuing with the
-CI repair loop and a draft rc1 release; the release is not published.
+INSTALL/SIGNING/RELEASING docs.
+**Published-repo defect found by CI (2026-11-10):** the Stage A publication did not contain
+`backend/backup/` (the unanchored `.gitignore` rule `backup/` matched it) or `packaging/backuplens.spec`
+(`*.spec`). Local tests passed because those files existed on disk, but a fresh clone could neither import
+the app nor build it. Fixed by anchoring the personal-backup rules to the repository root and allowing the
+packaging spec (PR #2), then verified with a clean clone: ruff clean and 110 unit/contract tests pass.
+**CI and release (2026-11-10):** PR #2 CI passed on Windows, macOS and Linux with Python 3.11 and 3.12.
+The release-workflow dry run built all four platforms; the Linux AppImage needed the AppDir root icon
+(fixed in PR #9). The tag run then created the **draft** `v0.1.0-rc1` pre-release (fixed notes/artifact
+flattening in PRs #10/#11) with 12 assets: Windows setup + portable ZIP, macOS arm64/Intel DMG + ZIP,
+Linux AppImage + .deb + .tar.gz, LICENSE, THIRD_PARTY_NOTICES.txt and SHA256SUMS.txt. All checksums verify;
+the downloaded Windows installer was silently installed, smoke-tested and uninstalled (exit 0).
+The `v0.1.0-rc1` tag was recreated only between failed draft runs, before any release or asset existed.
+**The release was not published and no final `v0.1.0` tag was created.** Publication is a human decision.
 
 ### P-013+ — Optional modules (P2/P3)  ⬜
 Run one prompt per module after v0.1.0: Messages (F-MSG-01/02), WhatsApp (F-WAP-01), Contacts

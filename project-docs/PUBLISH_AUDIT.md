@@ -134,3 +134,33 @@ Branch protection was not set, so the automated PR flow is not blocked.
 - [x] Repository is public and verified three ways; other repositories unchanged.
 
 **Verdict: APPROVE for Stage B.**
+
+## 7. Stage B addendum — publication defect and draft rc1 (2026-11-10)
+
+### Defect found after publication
+
+The Stage A fresh-clone audit checked tracked files, privacy and links but did not run the application
+from the clone. Stage B's first CI run exposed that the public repository was missing:
+
+- `backend/backup/` — excluded by the unanchored `.gitignore` rule `backup/`;
+- `packaging/backuplens.spec` — excluded by `*.spec`.
+
+Local tests and builds had passed because both existed on disk. A fresh clone could neither import the app
+nor build a package. Remedy (PR #2): anchor the personal-backup rules as `/backup/` and `/backups/`, allow
+`!packaging/backuplens.spec`, track the seven missing files, and verify from a clean clone (ruff clean,
+110 unit/contract tests pass, privacy guard passes). **Lesson:** a publication audit must include a
+fresh-clone test run and a package build, not only file/secret inspection.
+
+### Draft release evidence
+
+- Release: `v0.1.0-rc1` — `gh release view` reports `isDraft: true`, `isPrerelease: true`.
+- Assets (12): Windows `setup.exe` + `portable.zip`; macOS arm64 and x86_64 `dmg` + `zip`; Linux
+  `AppImage`, `amd64.deb`, `x86_64.tar.gz`; `LICENSE`, `THIRD_PARTY_NOTICES.txt`, `SHA256SUMS.txt`.
+- `SHA256SUMS.txt`: all 11 listed hashes verified by an independent local SHA-256 script.
+- `THIRD_PARTY_NOTICES.txt` is at the release root, inside the Windows portable ZIP and installer,
+  inside the Linux tarball/`.deb`, and in `BackupLens.app/Contents/Resources/` for both macOS builds.
+- Downloaded Windows setup: silent install → `--smoke-test` (exit 0) → silent uninstall (exit 0).
+- Release workflow: Windows/macOS arm64/macOS Intel/Linux and the draft job all green.
+- The `v0.1.0-rc1` tag was recreated only between failed draft runs, before any release or asset existed.
+
+**No release was published and no final `v0.1.0` tag was created.**

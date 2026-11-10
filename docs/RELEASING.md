@@ -40,13 +40,16 @@ Silent install/smoke/uninstall, then create the portable ZIP (the workflow does 
 ## 3. CI and draft release
 
 1. Push a branch and open a PR; wait for `.github/workflows/ci.yml` (3 OS families).
-2. Run the release workflow with `workflow_dispatch` (dry run) and fix any job failures.
-3. Merge the PR.
+2. Merge the PR. `workflow_dispatch` only sees workflows that exist on the default branch.
+3. Optional dry run from `main`: `gh workflow run release.yml --ref main` and fix any job failures in a
+   follow-up PR. This builds all platforms but creates no release.
 4. Tag an RC: `git tag -a v<version>-rc1 -m "BackupLens v<version>-rc1"` and push the tag.
 5. The workflow creates a **draft** GitHub Release with Windows, macOS arm64/Intel, Linux artifacts,
    `SHA256SUMS.txt`, notices and notes. It never publishes automatically.
 6. Download the draft assets with `gh release download`, verify checksums, and test on real machines where
    possible.
+7. If a draft run fails only in workflow/packaging code, fix it, delete the **unpublished** draft and its
+   tag, and recreate the tag on the fixed commit. Never delete or replace assets after publishing.
 
 ## 4. Publish (human only)
 
