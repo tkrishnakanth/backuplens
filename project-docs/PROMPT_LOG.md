@@ -373,6 +373,23 @@ only the new repository. Issues, Discussions, vulnerability reporting, secret sc
 protection and Dependabot were enabled on this repository only. Full evidence:
 `project-docs/PUBLISH_AUDIT.md`.
 
+### P-015 — Phase 10B: release engineering (BLOCKED before CI/release)  🟨
+**Agent:** qa / api
+**Outcome (2026-11-10):** Implemented the Stage B application groundwork and local Windows packaging:
+single version source (`backend/version.py` read by `pyproject.toml`), `--version`, `--port`,
+`--no-browser`, `--data-dir`, `--smoke-test`, `--quit-after-idle`, per-OS data/cache paths,
+single-instance state file, unauthenticated `/api/health`, protected `POST /api/app/quit`, and a
+menu item. Added original icon artwork/generator, PyInstaller spec, Inno Setup per-user installer,
+macOS/Linux packaging scripts, and tests. Locally the Windows PyInstaller build passed `--smoke-test`;
+the Inno installer silently installed, the installed app passed `--smoke-test`, and silent uninstall
+removed the program directory.
+
+**STOP CONDITION HIT (GPLv2), before CI/release:** `pillow-heif` 1.8.1 binary wheels bundle
+`x265` under GPLv2 (plus LGPLv3 libheif/libde265). The frozen app therefore contains a GPLv2
+component and cannot be published as MIT-only binaries. All local `build/` and `dist/` output was
+deleted; no CI run, release, rc tag or binary was uploaded. See `project-docs/RELEASE_BLOCKER.md` for
+the evidence and options A–D. Stage B remains 🟨 pending the owner's licensing decision.
+
 ### P-013+ — Optional modules (P2/P3)  ⬜
 Run one prompt per module after v0.1.0: Messages (F-MSG-01/02), WhatsApp (F-WAP-01), Contacts
 (F-CON-01), Call history (F-CAL-01), Notes (F-NOT-01), Calendar, Safari, Voice memos, Apps.
