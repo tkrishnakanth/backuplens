@@ -28,7 +28,6 @@ from iphone_backup_decrypt.exceptions import (
 from iphone_backup_decrypt.utils import FilePlist, aes_decrypt_chunked, backup_file_path
 
 from .errors import (
-    BackupError,
     BadDestination,
     ManifestMissing,
     NotABackup,
