@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a viewer, export option or UI improvement
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Photos browser / UI
+        - Export
+        - Raw file explorer
+        - Settings
+        - Other data module (Messages, Contacts, Calls, Notes, Calendar, Safari, Voice, Apps)
+        - Packaging / docs
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: This request contains no personal data, photo, backup or password.
+          required: true
