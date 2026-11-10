@@ -239,7 +239,12 @@ a spec edit.
 | 8 | ✅ | phase-8-hardening | qa (self-review) | 2026-10-28 |
 | 9 | ✅ | phase-9-release | architect (self-review) | 2026-10-28 |
 | 10A | ✅ | phase-10a-publish | architect (Stage A review in PUBLISH_AUDIT) | 2026-11-10 |
-| 10B | 🟨 | phase-10b-release | | |
+| 10B | ✅ | phase-10b-release | qa (self-review; draft release only) | 2026-11-10 |
+
+Stage 10B produced the **draft** `v0.1.0-rc1` pre-release with Windows, macOS (arm64/Intel) and Linux
+artifacts. Publishing the draft and creating the final `v0.1.0` tag remain human decisions. The Stage A
+publication missed `backend/backup/` and `packaging/backuplens.spec` because of broad ignore patterns;
+both were restored in Stage B and verified from a clean clone (see `PUBLISH_AUDIT.md`).
 
 **Escalate to the human (you) when:** the real backup cannot be unlocked; the library does not support
 the iOS version; a dependency needs adding; a spec decision changes scope; any step would require
