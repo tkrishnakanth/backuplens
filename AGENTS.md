@@ -238,8 +238,8 @@ a spec edit.
 | 7 | ✅ | phase-7-raw-settings | architect (self-review) | 2026-10-28 |
 | 8 | ✅ | phase-8-hardening | qa (self-review) | 2026-10-28 |
 | 9 | ✅ | phase-9-release | architect (self-review) | 2026-10-28 |
-| 10A | 🟨 | phase-10a-publish | architect review pending | 2026-11-10 |
-| 10B | ⬜ | phase-10b-release | | |
+| 10A | ✅ | phase-10a-publish | architect (Stage A review in PUBLISH_AUDIT) | 2026-11-10 |
+| 10B | 🟨 | phase-10b-release | | |
 
 **Escalate to the human (you) when:** the real backup cannot be unlocked; the library does not support
 the iOS version; a dependency needs adding; a spec decision changes scope; any step would require

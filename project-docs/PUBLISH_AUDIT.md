@@ -101,10 +101,36 @@ library value.
 
 ## 5. Remote verification (Stage A step 5)
 
-To be filled after the private push and fresh-clone rescan; then the public visibility evidence and
-before/after repository snapshot diff.
+- Private repo created and `main` pushed: **yes**
+- Fresh shallow clone into a temporary folder: **136 tracked files**, equal to the local `git ls-files`
+  list via `gh api repos/.../git/trees/main?recursive=1` (no extra or missing blobs).
+- Fresh-clone privacy guard: **passed** for 136 files.
+- Fresh-clone `detect-secrets`: the same five reviewed false positives listed in §2.1; no real secret.
+- No `project-docs/local`, reference screenshot, `.env`, SQLite, backup, personal media or logs in the
+  clone; commit identity is the no-reply address only.
 
-- Private repo created: _(pending)_
-- Fresh-clone audit: _(pending)_
-- Public visibility (gh / unauthenticated HTTP / unauthenticated API): _(pending)_
-- Snapshot diff: _(pending)_
+### Public visibility evidence
+
+- `gh repo view tkrishnakanth/backuplens --json visibility,isPrivate,url` →
+  `{"isPrivate":false,"url":"https://github.com/tkrishnakanth/backuplens","visibility":"PUBLIC"}`
+- Unauthenticated `curl.exe -s -o NUL -w "%{http_code}" https://github.com/tkrishnakanth/backuplens` →
+  **200**
+- Unauthenticated `https://api.github.com/repos/tkrishnakanth/backuplens` →
+  `private=false`, `visibility=public`
+- Second `gh repo list --limit 1000 --json nameWithOwner,visibility` snapshot diff against the
+  pre-work snapshot: **only `tkrishnakanth/backuplens|PUBLIC` was added**; no other repository changed
+  visibility.
+
+Repository features enabled on this repository only: Issues, Discussions, vulnerability alerts,
+private vulnerability reporting, secret scanning, push protection and Dependabot security updates.
+Branch protection was not set, so the automated PR flow is not blocked.
+
+## 6. Architect review — Stage A
+
+- [x] Non-code files moved; link check 0 dangling links; tests pass.
+- [x] Sanitised schema notes; raw notes and reference counts only in ignored local files.
+- [x] Device IDs, personal email and library names removed; history is clean.
+- [x] Reference screenshot never tracked; no backup-derived files tracked.
+- [x] Repository is public and verified three ways; other repositories unchanged.
+
+**Verdict: APPROVE for Stage B.**
