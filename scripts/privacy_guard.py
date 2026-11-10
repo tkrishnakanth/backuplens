@@ -65,6 +65,9 @@ def main() -> int:
         if name.startswith("project-docs/local/") or name == ".env":
             problems.append((name, "private path tracked"))
             continue
+        if name == "scripts/privacy_guard.py":
+            # The guard contains the detection patterns themselves.
+            continue
         if suffix in {".png", ".jpg", ".jpeg", ".ico", ".icns", ".heic", ".mov", ".mp4", ".zip"}:
             continue
         try:
